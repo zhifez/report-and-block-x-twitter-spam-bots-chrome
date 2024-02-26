@@ -8,7 +8,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["https://twitter.com/notifications"],
+      "matches": ["https://twitter.com/notifications*"],
       "js": [
         "main.js",
         "find_spam_bots.js"
@@ -16,8 +16,7 @@
     },
     {
       "matches": [
-        "https://twitter.com/*?block",
-        "https://twitter.com/*?autoblock"
+        "https://twitter.com/*?autoRNB*"
       ],
       "js": [
         "main.js",

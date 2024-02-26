@@ -3,24 +3,37 @@ const MAX_INTERVAL = 15;
 const INTERVAL_DELAY = 2;
 
 let susUsers = [];
+let willReport = true;
+let willBlock = true;
 let willAutoScrollAndScan = false;
-let willAutoBlock = false;
+let willAutoReportAndBlock = false;
+
+if (window.location.search.includes('willReport=false')) {
+  willReport = false;
+}
+if (window.location.search.includes('willBlock=false')) {
+  willBlock = false;
+}
 
 setTimeout(async () => {
   if (confirmStart()) {
     willAutoScrollAndScan = confirmWithhAutoScrollAndScan();
     if (willAutoScrollAndScan) {
-      willAutoBlock = confirmWillAutoBlock();
+      if (willReport || willBlock) {
+        willAutoReportAndBlock = confirmWillAutoBlock();
+      }
       collectAndFindBotsOnInterval();
     } else {
-      willAutoBlock = confirmWillAutoBlock();
+      if (willReport || willBlock) {
+        willAutoReportAndBlock = confirmWillAutoBlock();
+      }
       collectAndFindBots();
     }
   }
 }, 2000);
 
 function confirmStart() {
-  return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report and block spam bots?`);
+  return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} spam bots?`);
 }
 
 function confirmWithhAutoScrollAndScan() {
@@ -81,10 +94,16 @@ function collectAndFindBots() {
 }
 
 function openSusUsers() {
-  console.log(`Found ${susUsers.length} sus users.`);
-  if (susUsers.length > 0) {
+  if (willReport || willBlock) {
+    console.log(`Found ${susUsers.length} potential spam bots.`);
     susUsers.forEach(s => {
-      window.open(`${s}?${willAutoBlock ? 'autoblock' : 'block'}`);
+      window.open(`${s}?autoRNB=${willAutoReportAndBlock ? 'true' : 'false'}&willReport=${willReport}&willBlock=${willBlock}`);
     });
+  } else {
+    let message = `Found ${susUsers.length} potential spam bots:`;
+    susUsers.forEach(s => {
+      message += `\n- ${s}`;
+    });
+    alert(message);
   }
 }

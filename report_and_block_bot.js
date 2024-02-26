@@ -1,10 +1,20 @@
 const pathname = window.location.pathname.replace('/', '');
-const willAutoblock = window.location.search.includes('autoblock');
+const isUserABotOverride = window.location.search.includes('autoRNB');
+const willAutoRNB = window.location.search.includes('autoRNB=true');
+let willReport = true;
+let willBlock = true;
 
-if (!isUserABot(pathname)) {
+if (window.location.search.includes('willReport=false')) {
+  willReport = false;
+}
+if (window.location.search.includes('willBlock=false')) {
+  willBlock = false;
+}
+
+if (!isUserABot(pathname) && !isUserABotOverride) {
   console.log('User is not a bot, I think.');
 } else {
-  console.log('User is a bot, I think.');
+  console.log(`${isUserABotOverride ? '[Override] ' : ''}User is a bot, I think.`);
 
   let isUserBlocked = false;
   if (document.visibilityState === "hidden") {
@@ -24,17 +34,29 @@ if (!isUserABot(pathname)) {
 }
 
 function manualOrAutoBlockUser() {
-  if (willAutoblock) {
-    reportAndBlockUser();
+  if (willAutoRNB) {
+    runOperation();
     return;
   }
 
-  if (confirm(`User (@${pathname}) is a bot, proceed to report and block this user?`)) {
-    reportAndBlockUser();
+  if (confirm(`User (@${pathname}) is a bot, proceed to report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} this user?`)) {
+    runOperation();
   }
 }
 
-function reportAndBlockUser() {
+function runOperation() {
+  if (willReport && willBlock) {
+    startReportAndOrBlockUser();
+  } else if (willReport && !willBlock) {
+    startReportAndOrBlockUser();
+  } else if (!willReport && willBlock) {
+    startBlockUser();
+  } else {
+    console.log('Nothing happens');
+  }
+}
+
+function startReportAndOrBlockUser() {
   const moreButton = document.querySelector('div[aria-label="More"]');
   if (!moreButton) return;
 
@@ -51,8 +73,44 @@ function reportAndBlockUser() {
   setTimeout(() => {
     reportUser();
 
-    setTimeout(blockUser, 2000);
+    if (willBlock) {
+      setTimeout(blockUser, 2000);
+    } else {
+      setTimeout(clickDone, 2000);
+    }
   }, 2000);
+}
+
+function startBlockUser() {
+  const moreButton = document.querySelector('div[aria-label="More"]');
+  if (!moreButton) return;
+
+  console.log('Click More button');
+  moreButton.click();
+
+  const spans = document.querySelectorAll('span');
+  const blockBtn = Array.from(spans).find(span => span.textContent.includes("Block"));
+  if (!blockBtn) return;
+
+  console.log('Click block button');
+  blockBtn.click();
+
+  // Find and click on the block button in modal
+  const modalInnerSpans = document.querySelectorAll('span');
+  const blockSpans = Array.from(modalInnerSpans).filter(span => span.textContent.includes("Block"));
+  if (!blockSpans?.length) return;
+
+  let nextBlockBtn;
+  blockSpans.forEach(span => {
+    const targetParent = findTargetParent(span, 4);
+    if (targetParent) {
+      nextBlockBtn = targetParent;
+    }
+  });
+  if (!nextBlockBtn) return;
+
+  console.log('Click Block button');
+  nextBlockBtn.click();
 }
 
 function reportUser() {
@@ -106,6 +164,16 @@ function blockUser() {
   setTimeout(() => {
     window.close();
   }, 1000);
+}
+
+function clickDone() {
+  const modalDiv = document.querySelector('div[aria-labelledby="modal-header"]');
+  const modalSpans = modalDiv.querySelectorAll('span');
+  const doneBtn = Array.from(modalSpans).find(span => span.textContent.includes("Done"));
+
+  if (!doneBtn) return;
+
+  doneBtn.click();
 }
 
 // Function to find the parent's parent div with role="button"
