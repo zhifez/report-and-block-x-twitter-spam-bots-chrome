@@ -20,7 +20,7 @@ setTimeout(async () => {
 }, 2000);
 
 function confirmStart() {
-  return confirm(`[xTwitter] It seems like you're in X/Twitter's notification page. Would you like to begin scanning, report and block spam bots?`);
+  return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report and block spam bots?`);
 }
 
 function confirmWithhAutoScrollAndScan() {
