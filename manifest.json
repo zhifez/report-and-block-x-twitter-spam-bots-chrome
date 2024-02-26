@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "xTwitter: Report & Block Spam Bots",
+  "description": "Scan, report and block spam bots in X / Twitter's notifications page.",
+  "version": "1.0",
+  "permissions": [
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/notifications"],
+      "js": [
+        "main.js",
+        "find_spam_bots.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://twitter.com/*?block",
+        "https://twitter.com/*?autoblock"
+      ],
+      "js": [
+        "main.js",
+        "report_and_block_bot.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "public.html",
+    "default_icon": "icon.png"
+  }
+}
