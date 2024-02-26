@@ -6,7 +6,7 @@ Scan, report and block spam bots in X / Twitter's notifications page.
 
 1. Clone this repo to local.
 
-2. In Chrome, navigate to [Chrome Extensions Page](chrome://extensions/).
+2. In Chrome, navigate to Chrome Extensions Page: chrome://extensions/.
 
 3. Select "Load Unpacked", a directory selection UI will popup.
 
