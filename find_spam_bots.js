@@ -58,7 +58,7 @@ function collectAndFindBotsOnInterval() {
     if (intervalCount <= 0) {
       console.log('Scan complete');
       clearInterval(interval);
-      openSusUsers();
+      setTimeout(() => openSusUsers(), WAIT_TIME_RB_OPERATION);
       return;
     }
 
