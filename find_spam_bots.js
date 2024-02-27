@@ -95,16 +95,17 @@ function collectAndFindBots() {
 }
 
 function openSusUsers() {
+  let message = `Found ${susUsers.length} potential spam bots:`;
+  susUsers.forEach(s => {
+    message += `\n- ${s}`;
+  });
+
   if (willReport || willBlock) {
-    console.log(`Found ${susUsers.length} potential spam bots.`);
+    console.log(message);
     susUsers.forEach(s => {
       window.open(`${s}?autoRNB=${willAutoReportAndBlock ? 'true' : 'false'}&willReport=${willReport}&willBlock=${willBlock}`);
     });
   } else {
-    let message = `Found ${susUsers.length} potential spam bots:`;
-    susUsers.forEach(s => {
-      message += `\n- ${s}`;
-    });
     alert(message);
   }
 }
