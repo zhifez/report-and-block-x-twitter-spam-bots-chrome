@@ -36,7 +36,7 @@ setTimeout(async () => {
 }, WAIT_TIME_INIT);
 
 function confirmStart() {
-  return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} spam bots?`);
+  return confirm(`[X/Twitter Spam Bots Scanner]\nLooks like you're in X/Twitter's notification page. Would you like to begin scanning, report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} spam bots?`);
 }
 
 function confirmWithhAutoScrollAndScan() {
