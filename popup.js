@@ -18,7 +18,11 @@ checkboxBlock.addEventListener('change', function () {
 });
 
 btnScan.addEventListener('click', function () {
-  chrome.tabs.create({
-    url: `${TARGET_PAGE_URL}?willReport=${willReport}&willBlock=${willBlock}`,
+  const url = `${TARGET_PAGE_URL}?willReport=${willReport}&willBlock=${willBlock}`;
+  // chrome.tabs.create({
+  //   url,
+  // });
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.update(tabs[0].id, { url });
   });
 });
