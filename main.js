@@ -2,6 +2,7 @@ const REGEX_DIGITS_EXTRACTION = /\d+/g;
 const REGEX_SPAM_USERNAME_REQS = [
   /^(?=(?:[^a-z]*[a-z]){2})(?=(?:[^A-Z]*[A-Z]){2})(?=(?:\D*\d){6}).*$/,
   /^(?=(?:[^a-z]*[a-z]){1})(?=(?:[^A-Z]*[A-Z]){3})(?=(?:\D*\d){6}).*$/,
+  /^(?=(?:[^a-z]*[a-z]){1})(?=(?:[^A-Z]*[A-Z]){1})(?=(?:\D*\d){7}).*$/,
 ];
 const MAX_SUS_DIGITS = 6;
 

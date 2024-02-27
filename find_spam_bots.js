@@ -28,9 +28,10 @@ setTimeout(async () => {
         willAutoReportAndBlock = confirmWillAutoBlock();
       }
       collectAndFindBots();
+      setTimeout(() => openSusUsers(), 1000);
     }
   }
-}, 2000);
+}, 3000);
 
 function confirmStart() {
   return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} spam bots?`);
