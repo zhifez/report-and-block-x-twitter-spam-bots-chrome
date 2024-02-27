@@ -1,6 +1,8 @@
 const BASE_URL = 'https://twitter.com/';
 const MAX_INTERVAL = 15;
 const INTERVAL_DELAY = 2;
+const WAIT_TIME_INIT = 3000;
+const WAIT_TIME_RB_OPERATION = 1000;
 
 let susUsers = [];
 let willReport = true;
@@ -28,10 +30,10 @@ setTimeout(async () => {
         willAutoReportAndBlock = confirmWillAutoBlock();
       }
       collectAndFindBots();
-      setTimeout(() => openSusUsers(), 1000);
+      setTimeout(() => openSusUsers(), WAIT_TIME_RB_OPERATION);
     }
   }
-}, 3000);
+}, WAIT_TIME_INIT);
 
 function confirmStart() {
   return confirm(`[xTwitter] Looks like you're in X/Twitter's notification page. Would you like to begin scanning, report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} spam bots?`);

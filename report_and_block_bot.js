@@ -1,6 +1,11 @@
+const WAIT_TIME_INIT = 3000;
+const WAIT_TIME_RB_OPERATION = 3000;
+const WAIT_TIME_EXIT = 1000;
+
 const pathname = window.location.pathname.replace('/', '');
 const isUserABotOverride = window.location.search.includes('autoRNB');
 const willAutoRNB = window.location.search.includes('autoRNB=true');
+
 let willReport = true;
 let willBlock = true;
 
@@ -29,7 +34,7 @@ if (!isUserABot(pathname) && !isUserABotOverride) {
   } else {
     setTimeout(() => {
       manualOrAutoBlockUser();
-    }, 3000);
+    }, WAIT_TIME_INIT);
   }
 }
 
@@ -74,11 +79,11 @@ function startReportAndOrBlockUser() {
     reportUser();
 
     if (willBlock) {
-      setTimeout(blockUser, 2000);
+      setTimeout(blockUser, WAIT_TIME_RB_OPERATION);
     } else {
-      setTimeout(clickDone, 2000);
+      setTimeout(clickDone, WAIT_TIME_RB_OPERATION);
     }
-  }, 2000);
+  }, WAIT_TIME_RB_OPERATION);
 }
 
 function startBlockUser() {
@@ -163,7 +168,7 @@ function blockUser() {
 
   setTimeout(() => {
     window.close();
-  }, 1000);
+  }, WAIT_TIME_EXIT);
 }
 
 function clickDone() {
