@@ -1,4 +1,4 @@
-# xTwitter: Report & Block Spam Bots
+# X/Twitter Spam Bots Scanner
 
 Automate the process of scaning, reporting and blocking spam bots in X / Twitter's notifications page.
 
