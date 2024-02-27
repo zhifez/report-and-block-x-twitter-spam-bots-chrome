@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "xTwitter: Report & Block Spam Bots",
+  "name": "X/Twitter Spam Bots Scanner",
   "description": "Scan, report and block spam bots in X / Twitter's notifications page.",
   "version": "1.0",
   "permissions": [
