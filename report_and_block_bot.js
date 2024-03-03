@@ -16,11 +16,7 @@ if (window.location.search.includes('willBlock=false')) {
   willBlock = false;
 }
 
-if (!isUserABot(pathname) && !isUserABotOverride) {
-  console.log('User is not a bot, I think.');
-} else {
-  console.log(`${isUserABotOverride ? '[Override] ' : ''}User is a bot, I think.`);
-
+if (isUserABotOverride || isUserABot(pathname)) {
   let isUserBlocked = false;
   if (document.visibilityState === "hidden") {
     document.addEventListener("visibilitychange", () => {
@@ -36,6 +32,8 @@ if (!isUserABot(pathname) && !isUserABotOverride) {
       manualOrAutoBlockUser();
     }, WAIT_TIME_INIT);
   }
+} else {
+  console.log('User is probably not a bot.');
 }
 
 function manualOrAutoBlockUser() {
@@ -44,7 +42,7 @@ function manualOrAutoBlockUser() {
     return;
   }
 
-  if (confirm(`User (@${pathname}) is a bot, proceed to report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} this user?`)) {
+  if (confirm(`${isUserABotOverride ? '[Override] ' : ''}User (@${pathname}) is probably a bot, proceed to report${willReport ? '' : ' (disabled)'} and block${willBlock ? '' : ' (disabled)'} this user?`)) {
     runOperation();
   }
 }
