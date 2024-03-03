@@ -4,6 +4,14 @@
       body {
         min-width: 200px;
       }
+
+      .w-full {
+        width: 100%;
+      }
+      
+      #btnForced, #btnForcedAuto {
+        margin-top: 8px;
+      }
     </style>
     <h3>X/Twitter Spam Bots Scanner</h3>
     <p>Scan, report and block spam bots via X / Twitter's notifications page.</p>
@@ -14,7 +22,12 @@
     <input id="checkboxBlock" type="checkbox" value="checkboxBlock" checked>
     <label for="checkboxBlock">Will Block</label><br><br>
 
-    <button id="btnScan">Begin Scanning</button>
+    <button id="btnScan" class="w-full">Begin Scanning</button>
+
+    <button id="btnForced" class="w-full">Force Report & Block</button>
+
+    <button id="btnForcedAuto" class="w-full">Force Auto Report & Block</button>
+    
     <script src="popup.js"></script>
   </body>
 </html>
